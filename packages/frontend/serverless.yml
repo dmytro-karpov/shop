@@ -1,0 +1,120 @@
+service: frontend-shop-dmka
+
+plugins:
+  - serverless-finch
+  - serverless-single-page-app-plugin
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-central-1
+
+custom:
+  client:
+    bucketName: frontend-shop-dmka-web-bucket
+    distributionFolder: dist
+    indexDocument: index.html
+    errorDocument: index.html
+
+resources:
+  Resources:
+    WebAppS3Bucket:
+      Type: "AWS::S3::Bucket"
+      Properties:
+        BucketName: 
+          Fn::Sub: ${self:custom.client.bucketName}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          IgnorePublicAcls: true
+          BlockPublicPolicy: true
+          RestrictPublicBuckets: true
+    
+    # OAI to access S3 Bucket
+    WebAppCloudFrontOAI:
+      Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
+      Properties:
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: 'OAI for WebApp'
+
+    # S3 Bucket Policy for restricting access
+    WebAppS3BucketPolicy:
+      Type: 'AWS::S3::BucketPolicy'
+      Properties:
+        Bucket: 
+          Ref: WebAppS3Bucket
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: 'Allow'
+              Principal:
+                Service: 'cloudfront.amazonaws.com'
+              Action: 's3:GetObject'
+              Resource: 
+                Fn::Sub: 'arn:aws:s3:::${self:custom.client.bucketName}/*'
+              Condition:
+                StringEquals:
+                  aws:SourceArn: 
+                    Fn::Sub: "arn:aws:cloudfront::${AWS::AccountId}:distribution/${WebAppCloudFrontDistribution}"
+            - Effect: 'Allow'
+              Principal:
+                AWS:
+                  Fn::Sub: 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${WebAppCloudFrontOAI}'
+              Action: 's3:GetObject'
+              Resource: 
+                Fn::Sub: 'arn:aws:s3:::${self:custom.client.bucketName}/*'
+          
+    # CloudFront Origin Request Policy
+    WebAppOriginRequestPolicy:
+      Type: "AWS::CloudFront::OriginRequestPolicy"
+      Properties:
+        OriginRequestPolicyConfig:
+          Comment: "Allow only CloudFront to access S3 content"
+          Name: "OnlyCloudFront"
+          CookiesConfig:
+            CookieBehavior: "none"
+          HeadersConfig:
+            HeaderBehavior: "none"
+          QueryStringsConfig:
+            QueryStringBehavior: "none"
+
+    # CloudFront Distribution
+    WebAppCloudFrontDistribution:
+      Type: "AWS::CloudFront::Distribution"
+      Properties:
+        DistributionConfig:
+          Origins:
+            - DomainName:
+                Fn::GetAtt: [WebAppS3Bucket, RegionalDomainName]
+              Id: WebApp
+              S3OriginConfig:
+                OriginAccessIdentity: 
+                  Fn::Sub: 'origin-access-identity/cloudfront/${WebAppCloudFrontOAI}'
+          Enabled: true
+          IPV6Enabled: true
+          HttpVersion: http2
+          DefaultRootObject: index.html
+          CustomErrorResponses:
+            - ErrorCode: 404
+              ResponseCode: 200
+              ResponsePagePath: /index.html
+            - ErrorCode: 403
+              ResponseCode: 200
+              ResponsePagePath: /index.html
+          DefaultCacheBehavior:
+            TargetOriginId: WebApp
+            ViewerProtocolPolicy: redirect-to-https
+            AllowedMethods:
+              - GET
+              - HEAD
+            CachedMethods:
+              - GET
+              - HEAD
+            Compress: true
+            ForwardedValues:
+              QueryString: false
+              Cookies:
+                Forward: none
+            CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+            OriginRequestPolicyId: !Ref WebAppOriginRequestPolicy
+          ViewerCertificate:
+            CloudFrontDefaultCertificate: true

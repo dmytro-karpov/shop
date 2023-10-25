@@ -22,12 +22,12 @@ const useCart = () => {
     }
   };
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = (productId: string) => {
     const updatedCart = cart.filter(item => item.product.id !== productId);
     setCart(updatedCart);
   };
 
-  const adjustQuantity = (productId: number, quantity: number) => {
+  const adjustQuantity = (productId: string, quantity: number) => {
     const updatedCart = cart.map(item =>
       item.product.id === productId ? { ...item, quantity } : item
     );

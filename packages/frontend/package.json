@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "client:deploy": "serverless client deploy --no-policy-change"
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
@@ -26,6 +27,9 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.31",
+    "serverless": "^3.36.0",
+    "serverless-finch": "^4.0.3",
+    "serverless-single-page-app-plugin": "^1.0.4",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"

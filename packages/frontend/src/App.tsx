@@ -8,7 +8,7 @@ import Home from './components/Home';
 
 const products: Product[] = [
   {
-    id: 1,
+    id: '1',
     description: 'Product 1',
     discount: 10,
     price: 100,
@@ -17,7 +17,7 @@ const products: Product[] = [
     stock: 10000,
   },
   {
-    id: 2,
+    id: '2',
     description: 'Product 2',
     discount: 15,
     price: 150,
@@ -26,7 +26,7 @@ const products: Product[] = [
     stock: 50,
   },
   {
-    id: 3,
+    id: '3',
     description: 'Product 3',
     price: 200,
     quantityUnit: 'piece',
@@ -60,10 +60,15 @@ function App() {
                 Products
               </Link>
             </li>
-            <li>
+            <li className="relative">
               <Link to="/cart" className="hover:underline">
                 Cart
               </Link>
+              {!!cart.length && (
+                <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-6 dark:border-gray-900">
+                  {cart.length}
+                </div>
+              )}
             </li>
           </ul>
         </nav>

@@ -4,8 +4,8 @@ import QuamtityInput from './QuantityInput';
 
 interface CartProps {
   cart: CartItem[];
-  onRemove: (productId: number) => void;
-  onAdjustQuantity: (productId: number, quantity: number) => void;
+  onRemove: (productId: string) => void;
+  onAdjustQuantity: (productId: string, quantity: number) => void;
 }
 
 const Cart: React.FC<CartProps> = ({ cart, onRemove, onAdjustQuantity }) => (

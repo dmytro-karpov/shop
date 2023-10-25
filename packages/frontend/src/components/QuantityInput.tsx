@@ -3,7 +3,7 @@ import { CartItem, QuantityUnit } from '../types';
 
 interface QuamtityInputProps {
   item: CartItem;
-  onAdjustQuantity: (productId: number, quantity: number) => void;
+  onAdjustQuantity: (productId: string, quantity: number) => void;
 }
 
 const transformQuantity = (quantity: number, quantityUnit: QuantityUnit) => {
