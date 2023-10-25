@@ -1,0 +1,7 @@
+{
+  "name": "shop-task",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
