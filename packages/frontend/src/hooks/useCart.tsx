@@ -1,40 +1,54 @@
 import { useState } from 'react';
-import { CartItem, Product } from '../types';
+import { Cart, Product } from '../types';
 
 const useCart = () => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<Cart>({});
 
-  const addToCart = (productToAdd: Product) => {
-    const addIncrement = productToAdd.quantityUnit === 'kg' ? 1000 : 1;
-    const existingCartItem = cart.find(
-      item => item.product.id === productToAdd.id
-    );
+  const addToCart = (product: Product) => {
+    setCart(prevCart => {
+      const currentQuantity = prevCart[product.id]?.quantity || 0;
 
-    if (existingCartItem) {
-      const updatedCart = cart.map(item =>
-        item.product.id === productToAdd.id
-          ? { ...item, quantity: item.quantity + addIncrement }
-          : item
-      );
-      setCart(updatedCart);
-    } else {
-      setCart([...cart, { product: productToAdd, quantity: addIncrement }]);
-    }
+      return {
+        ...prevCart,
+        [product.id]: {
+          product,
+          quantity: currentQuantity + 1,
+        },
+      };
+    });
   };
 
   const removeFromCart = (productId: string) => {
-    const updatedCart = cart.filter(item => item.product.id !== productId);
-    setCart(updatedCart);
+    setCart(prevCart => {
+      const updatedCart = { ...prevCart };
+      delete updatedCart[productId];
+      return updatedCart;
+    });
   };
 
   const adjustQuantity = (productId: string, quantity: number) => {
-    const updatedCart = cart.map(item =>
-      item.product.id === productId ? { ...item, quantity } : item
-    );
-    setCart(updatedCart);
+    if (quantity <= 0) {
+      removeFromCart(productId);
+      return;
+    }
+
+    setCart(prevCart => {
+      return {
+        ...prevCart,
+        [productId]: {
+          ...prevCart[productId],
+          quantity,
+        },
+      };
+    });
   };
 
-  return { cart, addToCart, removeFromCart, adjustQuantity };
+  return {
+    cart,
+    addToCart,
+    removeFromCart,
+    adjustQuantity,
+  };
 };
 
 export default useCart;

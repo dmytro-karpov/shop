@@ -8,9 +8,13 @@ export interface Product {
   stock: number;
 }
 
+export type QuantityUnit = 'piece' | 'kg';
+
 export interface CartItem {
   product: Product;
   quantity: number;
 }
 
-export type QuantityUnit = 'piece' | 'kg';
+export type Cart = {
+  [key: string]: CartItem;
+};

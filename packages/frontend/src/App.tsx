@@ -2,39 +2,8 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Cart from './components/Cart';
 import ProductList from './components/ProductList';
 import useCart from './hooks/useCart';
-import { Product } from './types';
 
 import Home from './components/Home';
-
-const products: Product[] = [
-  {
-    id: '1',
-    description: 'Product 1',
-    discount: 10,
-    price: 100,
-    quantityUnit: 'kg',
-    vatRate: 20,
-    stock: 10000,
-  },
-  {
-    id: '2',
-    description: 'Product 2',
-    discount: 15,
-    price: 150,
-    quantityUnit: 'piece',
-    vatRate: 20,
-    stock: 50,
-  },
-  {
-    id: '3',
-    description: 'Product 3',
-    price: 200,
-    quantityUnit: 'piece',
-    vatRate: 20,
-    stock: 50,
-  },
-  // ... add more products as needed
-];
 
 function App() {
   const { cart, addToCart, removeFromCart, adjustQuantity } = useCart();
@@ -64,9 +33,9 @@ function App() {
               <Link to="/cart" className="hover:underline">
                 Cart
               </Link>
-              {!!cart.length && (
+              {!!Object.keys(cart).length && (
                 <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-6 dark:border-gray-900">
-                  {cart.length}
+                  {Object.keys(cart).length}
                 </div>
               )}
             </li>
@@ -78,7 +47,11 @@ function App() {
           <Route
             path="/products"
             element={
-              <ProductList products={products} onAddToCart={addToCart} />
+              <ProductList
+                cart={cart}
+                onAddToCart={addToCart}
+                onRemove={removeFromCart}
+              />
             }
           />
           <Route

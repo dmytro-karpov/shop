@@ -1,21 +1,25 @@
 import React from 'react';
-import { CartItem } from '../types';
+import { Cart } from '../types';
 import QuamtityInput from './QuantityInput';
 
 interface CartProps {
-  cart: CartItem[];
+  cart: Cart;
   onRemove: (productId: string) => void;
   onAdjustQuantity: (productId: string, quantity: number) => void;
 }
 
-const Cart: React.FC<CartProps> = ({ cart, onRemove, onAdjustQuantity }) => (
+const CartPage: React.FC<CartProps> = ({
+  cart,
+  onRemove,
+  onAdjustQuantity,
+}) => (
   <div className="mt-10">
     <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
-    {cart.length === 0 ? (
+    {Object.values(cart).length === 0 ? (
       <p>Your cart is empty.</p>
     ) : (
       <ul>
-        {cart.map(item => (
+        {Object.values(cart).map(item => (
           <li
             key={item.product.id}
             className="border p-2 mb-2 rounded shadow-sm flex justify-between items-center"
@@ -25,7 +29,7 @@ const Cart: React.FC<CartProps> = ({ cart, onRemove, onAdjustQuantity }) => (
                 <h3 className="text-xl font-semibold">
                   {item.product.description}
                 </h3>
-                <p>Price: ${item.product.price.toFixed(2)}</p>
+                <p>Price: ${(item.product.price / 100).toFixed(2)}</p>
               </div>
               <div className="flex flex-col items-center space-x-2">
                 <p>Quantity {item.product.quantityUnit}:</p>
@@ -78,4 +82,4 @@ const Cart: React.FC<CartProps> = ({ cart, onRemove, onAdjustQuantity }) => (
   </div>
 );
 
-export default Cart;
+export default CartPage;
