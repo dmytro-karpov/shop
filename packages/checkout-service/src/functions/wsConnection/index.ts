@@ -4,12 +4,13 @@ export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
-        path: 'products',
-        method: 'get',
-        cors: {
-          origin: '*',
-        },
+      websocket: {
+        route: '$connect',
+      },
+    },
+    {
+      websocket: {
+        route: '$disconnect',
       },
     },
   ],

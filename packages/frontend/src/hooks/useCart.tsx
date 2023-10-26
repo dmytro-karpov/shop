@@ -12,7 +12,8 @@ const useCart = () => {
         ...prevCart,
         [product.id]: {
           product,
-          quantity: currentQuantity + 1,
+          quantity:
+            currentQuantity + (product.quantityUnit === 'kg' ? 1000 : 1),
         },
       };
     });

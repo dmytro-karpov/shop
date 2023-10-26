@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import { getProducts } from '@functions/index';
+import { getProducts, getProductsByIds } from '@functions/index';
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
@@ -24,7 +24,11 @@ const serverlessConfiguration: AWS = {
         statements: [
           {
             Effect: 'Allow',
-            Action: ['dynamodb:Query', 'dynamodb:Scan'],
+            Action: [
+              'dynamodb:Query',
+              'dynamodb:Scan',
+              'dynamodb:BatchGetItem',
+            ],
             Resource: [
               {
                 'Fn::GetAtt': ['ProductTable', 'Arn'],
@@ -36,7 +40,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { getProducts },
+  functions: { getProducts, getProductsByIds },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -69,8 +73,8 @@ const serverlessConfiguration: AWS = {
             },
           ],
           ProvisionedThroughput: {
-            ReadCapacityUnits: 5,
-            WriteCapacityUnits: 5,
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
           },
         },
       },

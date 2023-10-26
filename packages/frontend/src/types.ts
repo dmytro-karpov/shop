@@ -5,7 +5,6 @@ export interface Product {
   price: number;
   quantityUnit: QuantityUnit;
   vatRate: number; // percentage, e.g. 20 means 20% VAT
-  stock: number;
 }
 
 export type QuantityUnit = 'piece' | 'kg';

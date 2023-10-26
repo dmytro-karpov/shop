@@ -1,5 +1,5 @@
 export const API_PATHS = {
-  product:
-    'https://1h6ge4lyhj.execute-api.eu-central-1.amazonaws.com/dev/products',
-  invoice: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
+  product: import.meta.env.VITE_PRODUCT_SERVICE_URL,
+  checkout: import.meta.env.VITE_CHECKOUT_SERVICE_URL,
+  ws: import.meta.env.VITE_WS_SERVICE_URL,
 };

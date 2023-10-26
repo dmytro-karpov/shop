@@ -4,11 +4,10 @@ export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
-        path: 'products',
-        method: 'get',
-        cors: {
-          origin: '*',
+      sqs: {
+        batchSize: 5,
+        arn: {
+          'Fn::GetAtt': ['NewOrderQueue', 'Arn'],
         },
       },
     },

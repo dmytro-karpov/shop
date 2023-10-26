@@ -25,7 +25,6 @@ async function seedTable(products: Product[], tableName: string) {
           price: { N: product.price.toString() },
           quantityUnit: { S: product.quantityUnit },
           vatRate: { N: product.vatRate.toString() },
-          stock: { N: product.stock.toString() },
         },
       },
     }));
@@ -51,7 +50,6 @@ const products: Product[] = [
     price: 25,
     quantityUnit: 'piece',
     vatRate: 8,
-    stock: 240,
   },
   {
     id: '2',
@@ -59,7 +57,6 @@ const products: Product[] = [
     price: 240,
     quantityUnit: 'piece',
     vatRate: 8,
-    stock: 38,
   },
   {
     id: '3',
@@ -67,7 +64,6 @@ const products: Product[] = [
     price: 76000,
     quantityUnit: 'piece',
     vatRate: 22,
-    stock: 1,
   },
   {
     id: '4',
@@ -76,7 +72,6 @@ const products: Product[] = [
     price: 50,
     quantityUnit: 'piece',
     vatRate: 18,
-    stock: 77,
   },
   {
     id: '5',
@@ -84,7 +79,6 @@ const products: Product[] = [
     price: 125,
     quantityUnit: 'piece',
     vatRate: 22,
-    stock: 38,
   },
   {
     id: '6',
@@ -92,15 +86,13 @@ const products: Product[] = [
     price: 378,
     quantityUnit: 'piece',
     vatRate: 8,
-    stock: 92,
   },
   {
     id: '7',
     description: 'Fish Meat',
-    price: 8300,
+    price: 830,
     quantityUnit: 'kg',
     vatRate: 18,
-    stock: 49000,
   },
   {
     id: '8',
@@ -108,7 +100,6 @@ const products: Product[] = [
     price: 266,
     quantityUnit: 'piece',
     vatRate: 18,
-    stock: 16,
   },
   {
     id: '9',
@@ -117,7 +108,6 @@ const products: Product[] = [
     price: 920,
     quantityUnit: 'piece',
     vatRate: 18,
-    stock: 18,
   },
   {
     id: '10',
@@ -125,7 +115,6 @@ const products: Product[] = [
     price: 125,
     quantityUnit: 'kg',
     vatRate: 22,
-    stock: 8000,
   },
   {
     id: '11',
@@ -133,7 +122,6 @@ const products: Product[] = [
     price: 978,
     quantityUnit: 'piece',
     vatRate: 22,
-    stock: 22,
   },
   {
     id: '12',
@@ -141,7 +129,6 @@ const products: Product[] = [
     price: 8300,
     quantityUnit: 'piece',
     vatRate: 18,
-    stock: 10000,
   },
   {
     id: '13',
@@ -149,7 +136,6 @@ const products: Product[] = [
     price: 546,
     quantityUnit: 'piece',
     vatRate: 22,
-    stock: 89,
   },
   {
     id: '14',
@@ -157,7 +143,6 @@ const products: Product[] = [
     price: 134,
     quantityUnit: 'piece',
     vatRate: 8,
-    stock: 33,
   },
   {
     id: '15',
@@ -165,7 +150,6 @@ const products: Product[] = [
     price: 66,
     quantityUnit: 'piece',
     vatRate: 18,
-    stock: 14,
   },
   {
     id: '16',
@@ -173,7 +157,6 @@ const products: Product[] = [
     price: 123,
     quantityUnit: 'piece',
     vatRate: 22,
-    stock: 11,
   },
   {
     id: '17',
@@ -181,7 +164,6 @@ const products: Product[] = [
     price: 21,
     quantityUnit: 'piece',
     vatRate: 8,
-    stock: 85,
   },
   {
     id: '18',
@@ -189,7 +171,6 @@ const products: Product[] = [
     price: 16,
     quantityUnit: 'piece',
     vatRate: 18,
-    stock: 104,
   },
   {
     id: '19',
@@ -197,7 +178,6 @@ const products: Product[] = [
     price: 5,
     quantityUnit: 'piece',
     vatRate: 18,
-    stock: 398,
   },
   {
     id: '20',
@@ -205,7 +185,6 @@ const products: Product[] = [
     price: 112,
     quantityUnit: 'piece',
     vatRate: 8,
-    stock: 21,
   },
   {
     id: '21',
@@ -213,7 +192,6 @@ const products: Product[] = [
     price: 810,
     quantityUnit: 'piece',
     vatRate: 8,
-    stock: 51,
   },
   {
     id: '22',
@@ -221,7 +199,6 @@ const products: Product[] = [
     price: 1200,
     quantityUnit: 'piece',
     vatRate: 22,
-    stock: 205,
   },
 ];
 
